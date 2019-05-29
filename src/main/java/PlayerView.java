@@ -6,12 +6,13 @@ import javax.swing.ImageIcon;
 public class PlayerView {
     private int dx;
     private int dy;
-    private int x = 40;
+    private int x = 100;
     private int y = 40;
     private int w;
     private int h;
     private Image image;
     private GamePanel gp;
+    private int pointsDeVie = 100;
 
     public PlayerView(GamePanel gp) {
         this.gp = gp;
@@ -64,6 +65,14 @@ public class PlayerView {
     public Image getImage() {
 
         return image;
+    }
+
+    public int getPointsDeVie() {
+        return pointsDeVie;
+    }
+
+    public void setPointsDeVie(int vie) {
+        pointsDeVie = vie;
     }
 
     public void keyPressed(KeyEvent e) {

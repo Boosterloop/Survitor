@@ -1,6 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -12,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener {
+    final int longueurBarreVie = 70;
+    final int hauteurBarreVie = 10;
+
     private Timer timer;
     private PlayerView playerView;
     private ObstacleView obstacleView;
@@ -20,6 +21,8 @@ public class GamePanel extends JPanel implements ActionListener {
     private Map currentMap;
     private List<Map> maps;
     private int level;
+    private long lastTimeStamp;
+    private boolean firstCollision = true;
 
     public GamePanel() {
         initBoard();
@@ -28,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void initBoard() {
 
         addKeyListener(new TAdapter());
-        setBackground(Color.black);
+        setBackground(Color.white);
         setFocusable(true);
 
         playerView = new PlayerView(this);
@@ -68,6 +71,13 @@ public class GamePanel extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(playerView.getImage(), playerView.getX(), playerView.getY(), this);
         g2d.drawImage(obstacleView.getImage(), obstacleView.getX(), obstacleView.getY(), this);
+
+        // Affichage de la barre de vie
+        g.setColor(Color.red);
+        int tailleVie = (int)(playerView.getPointsDeVie() / 100.0 * longueurBarreVie);
+        g.fillRect(5,5,tailleVie, hauteurBarreVie);
+        g.setColor(Color.black);
+        g.drawRect(5,5,longueurBarreVie, hauteurBarreVie);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -77,6 +87,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void checkCollide() {
+
         int playerCenterX = playerView.getX() + playerView.getWidth() / 2;
         int playerCenterY = playerView.getY() + playerView.getHeight() / 2;
         int playerRayon = playerView.getWidth() / 2;
@@ -89,7 +100,18 @@ public class GamePanel extends JPanel implements ActionListener {
         double distAllowed = playerRayon + obstacleRayon;
 
         if (distBetween <= distAllowed) {
+            // Permet d'effectuer la première collision et initialiser le timestamp
+            if(firstCollision) {
+                firstCollision = false;
+            }
+            // Vérifie si la collision est trop récente par rapport à la précédente
+            else if(System.currentTimeMillis() - lastTimeStamp < 1000) {
+                return;
+            }
             System.out.println("COLLISION");
+            // Enlève de la vie
+            playerView.setPointsDeVie(playerView.getPointsDeVie() - 10);
+            lastTimeStamp = System.currentTimeMillis();
         }
     }
 
