@@ -1,6 +1,9 @@
-package Model;
+package Model.element;
 
-public class Pokemon extends Obstacle{
+import Model.element.Obstacle;
+import Model.visitor.Visitor;
+
+public class Pokemon extends Obstacle {
     private int vitesse;
 
     public Pokemon (int x, int y, int vitesse){

@@ -1,4 +1,6 @@
-package Model;
+package Model.element;
+
+import Model.visitor.Visitor;
 
 public abstract class Obstacle {
     private int x;
