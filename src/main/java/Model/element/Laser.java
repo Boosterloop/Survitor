@@ -1,6 +1,8 @@
-package Model;
+package Model.element;
 
-public class Laser extends  Obstacle{
+import Model.visitor.Visitor;
+
+public class Laser extends Obstacle {
     private int angularSpeed;
 
     public Laser(int x, int y, int angularSpeed){

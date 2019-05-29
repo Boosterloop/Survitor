@@ -1,6 +1,9 @@
-package Model;
+package Model.element;
 
-public class Trou extends Obstacle{
+import Model.element.Obstacle;
+import Model.visitor.Visitor;
+
+public class Trou extends Obstacle {
     private int size;
     public Trou (int x, int y, int size){
         super(x, y);

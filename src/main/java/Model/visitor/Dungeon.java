@@ -1,4 +1,8 @@
-package Model;
+package Model.visitor;
+
+import Model.element.Laser;
+import Model.element.Pokemon;
+import Model.element.Trou;
 
 public class Dungeon implements Visitor {
 
