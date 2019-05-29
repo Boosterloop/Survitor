@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
-public class Player {
+public class ObstacleView {
     private int dx;
     private int dy;
     private int x = 40;
@@ -13,7 +13,7 @@ public class Player {
     private Image image;
     private GamePanel gp;
 
-    public Player(GamePanel gp) {
+    public ObstacleView(GamePanel gp) {
         this.gp = gp;
         loadImage();
     }
@@ -71,19 +71,19 @@ public class Player {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = -2;
+            dx = 0;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 2;
+            dx = 0;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = -2;
+            dy = 0;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 2;
+            dy = 0;
         }
     }
 
