@@ -5,8 +5,8 @@ import Model.visitor.Visitor;
 public class Laser extends Obstacle {
     private int angularSpeed;
 
-    public Laser(int x, int y, int angularSpeed){
-        super(x, y);
+    public Laser(int width, int height, int angularSpeed){
+        super(width, height);
         this.angularSpeed = angularSpeed;
     }
 
@@ -14,4 +14,7 @@ public class Laser extends Obstacle {
         visitor.visit(this);
     }
 
+    public String getImagePath() {
+        return "laser.png";
+    }
 }

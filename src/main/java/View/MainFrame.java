@@ -1,13 +1,20 @@
+package View;
+
+import Model.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
 
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+
     public MainFrame() {
         add(new GamePanel());
 
         setTitle("Survitor");
-        setSize(400, 300);
+        setSize(WIDTH, HEIGHT);
 
         setLocationRelativeTo(null);
         setResizable(false);
