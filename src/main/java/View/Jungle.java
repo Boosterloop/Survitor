@@ -1,8 +1,8 @@
 package View;
 
-import Model.element.Laser;
+import Model.element.Hole;
+import Model.element.Wizard;
 import Model.element.Pokemon;
-import Model.element.Trou;
 
 import java.awt.*;
 import java.net.URL;
@@ -11,11 +11,12 @@ public class Jungle extends Map {
 
     private Image background;
     private int holeVisitCount = 0;
+    private int speedCount = 0;
 
     public Jungle(int timeout) {
         super(timeout);
         final URL url = Thread.currentThread().getContextClassLoader().getResource("mapJungle.jpg");
-        background =  Toolkit.getDefaultToolkit().getImage(url);
+        background =  Toolkit.getDefaultToolkit().getImage(url).getScaledInstance(MainFrame.WIDTH, MainFrame.HEIGHT, Image.SCALE_DEFAULT);
     }
 
     @Override
@@ -23,12 +24,23 @@ public class Jungle extends Map {
         return background;
     }
 
-    public void visit (Laser laser){
-
+    public void visit (Wizard wizard){
+        // doubling speed and randomizing directions every 41 / nbWizard frames
+        if (++speedCount % 41 == 0) {
+            wizard.setRandomSpeed();
+            wizard.setVx(wizard.getVx() * 2);
+            wizard.setVy(wizard.getVy() * 2);
+        }
+        // setting speed back to normal 18 frames after
+        else if ((speedCount + 18) % 41 == 0) {
+            wizard.setVx(wizard.getVx() / 2);
+            wizard.setVy(wizard.getVy() / 2);
+        }
+        wizard.moveStraight();
     }
-    public void visit (Trou trou){
-        if(holeVisitCount ++ % 101 == 0)
-            trou.setSize(trou.getSize()+5);
+    public void visit (Hole hole){
+        if(holeVisitCount ++ % 43 == 0)
+            hole.setSize(hole.getSize()+5);
     }
 
     public void visit (Pokemon pokemon){

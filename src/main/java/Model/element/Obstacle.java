@@ -14,9 +14,11 @@ public abstract class Obstacle implements Visitable {
     protected int height;
     protected int x;
     protected int y;
+    protected int vx = 0;
+    protected int vy = 0;
+    private long lastCollision = 0;
+    private int safeZoneSize = 100;
 
-//    protected boolean moved = false;
-//    protected boolean changed = false;
     protected static Random rand = new Random();
     private Image image;
 
@@ -26,21 +28,44 @@ public abstract class Obstacle implements Visitable {
         loadImage();
         newRandomPos();
     }
+
     public void move (int x, int y) {
         this.x = x;
         this.y = y;
     }
+
+    // calls itself if obstacle overlaps with player starting zone.
+    // -> too big obstacles causes infinite recursion.
     public void newRandomPos () {
         x = abs(rand.nextInt() % (MainFrame.WIDTH - width - 60)) + 30;
         y = abs(rand.nextInt() % (MainFrame.HEIGHT - height - 60)) + 30;
 
-        if ((x > MainFrame.WIDTH/2 - 50 && x < MainFrame.WIDTH/2 + 50) || (y > MainFrame.HEIGHT/2 - 50 && y < MainFrame.HEIGHT/2 + 50))
+        if (  (x > MainFrame.WIDTH/2 - safeZoneSize - width && x < MainFrame.WIDTH/2 + safeZoneSize)
+           || (y > MainFrame.HEIGHT/2 - safeZoneSize - height && y < MainFrame.HEIGHT/2 + safeZoneSize))
             newRandomPos();
     }
+
+    public void moveStraight () {
+        if (x + vx >= MainFrame.WIDTH - width || x + vx <= 0)
+            vx = -vx;
+        if (y + vy >= MainFrame.HEIGHT - height || y + vy <= 0)
+            vy = -vy;
+        x += vx;
+        y += vy;
+    }
+
     protected void loadImage() {
 
         final URL url = Thread.currentThread().getContextClassLoader().getResource(getImagePath());
         image =  Toolkit.getDefaultToolkit().getImage(url).getScaledInstance(width, height, Image.SCALE_DEFAULT);
+    }
+
+    public long getLastCollision() {
+        return lastCollision;
+    }
+
+    public void setLastCollision(long lastCollision) {
+        this.lastCollision = lastCollision;
     }
 
     public int getWidth() {
@@ -59,18 +84,50 @@ public abstract class Obstacle implements Visitable {
         return y;
     }
 
+    public int getVx() {
+        return vx;
+    }
+
+    public int getVy() {
+        return vy;
+    }
+
+    public void setVx(int vx) {
+        this.vx = vx;
+    }
+
+    public void setVy(int vy) {
+        this.vy = vy;
+    }
+
     public Image getImage() {
         return image;
     }
 
     public abstract String getImagePath ();
 
-//    public boolean hasMoved() {
-//        return moved;
-//    }
-//
-//    public boolean hasChanged() {
-//        return changed;
-//    }
+    public abstract int getRadius (double angle);
+
+    protected int ovalRadius (double angle) {
+        int w2 = width*width;
+        int h2 = height*height;
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+        return (int)Math.sqrt((w2*h2)/(sin*sin*w2+cos*cos*h2)) / 2;
+    }
+
+    protected int roundRadius() {
+        return width / 2;
+    }
+
+    protected int rectangleRadius (double angle) {
+        angle = Math.abs(angle);
+        if (angle < 0.5)
+            return width/2;
+        if (angle < 1)
+            return (int)(Math.sqrt((double)width*width+height*height)/2);
+        return height/2;
+    }
+
 
 }

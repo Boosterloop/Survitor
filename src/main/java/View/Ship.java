@@ -12,7 +12,7 @@ public class Ship extends Map {
     public Ship(int timeout) {
         super(timeout);
         final URL url = Thread.currentThread().getContextClassLoader().getResource("mapBoat.jpg");
-        background =  Toolkit.getDefaultToolkit().getImage(url);
+        background =  Toolkit.getDefaultToolkit().getImage(url).getScaledInstance(MainFrame.WIDTH, MainFrame.HEIGHT, Image.SCALE_DEFAULT);
     }
 
     @Override
@@ -20,10 +20,10 @@ public class Ship extends Map {
         return background;
     }
 
-    public void visit(Laser laser){
-
+    public void visit(Wizard wizard){
+        wizard.moveStraight();
     }
-    public void  visit(Trou trou){
+    public void  visit(Hole hole){
 
     }
 

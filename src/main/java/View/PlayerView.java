@@ -1,9 +1,9 @@
 package View;
 
 import Model.GamePanel;
-import Model.element.Laser;
+import Model.element.Hole;
+import Model.element.Wizard;
 import Model.element.Pokemon;
-import Model.element.Trou;
 import Model.visitor.Visitor;
 
 import java.awt.*;
@@ -15,8 +15,8 @@ public class PlayerView implements Visitor {
 
     private int dx;
     private int dy;
-    private int w = 41;
-    private int h = 65;
+    private int w = 50;
+    private int h = 50;
     private int x;
     private int y;
     private Image image;
@@ -31,21 +31,19 @@ public class PlayerView implements Visitor {
 
     private void loadImage() {
 
-        final URL url = Thread.currentThread().getContextClassLoader().getResource("perso.png");
+        final URL url = Thread.currentThread().getContextClassLoader().getResource("smiley.png");
         image =  Toolkit.getDefaultToolkit().getImage(url).getScaledInstance(w,h, Image.SCALE_DEFAULT);
 
     }
 
     public void move() {
 
-        if (! isDead()) {
-            if (x + dx > 0 && x + dx < gp.getWidth() - w) {
-                x += dx;
-            }
+        if (x + dx > 0 && x + dx < gp.getWidth() - w) {
+            x += dx;
+        }
 
-            if (y + dy > 0 && y + dy < gp.getHeight() - h) {
-                y += dy;
-            }
+        if (y + dy > 0 && y + dy < gp.getHeight() - h) {
+            y += dy;
         }
     }
     public void resetPos() {
@@ -102,19 +100,19 @@ public class PlayerView implements Visitor {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = -2;
+            dx = -5;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 2;
+            dx = 5;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = -2;
+            dy = -5;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 2;
+            dy = 5;
         }
     }
 
@@ -139,11 +137,11 @@ public class PlayerView implements Visitor {
         }
     }
 
-    public void visit(Laser laser) {
+    public void visit(Wizard wizard) {
         getDamage(22);
     }
 
-    public void visit(Trou trou) {
+    public void visit(Hole hole) {
         getDamage(PV_MAX);
     }
 

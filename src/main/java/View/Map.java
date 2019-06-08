@@ -15,9 +15,5 @@ public abstract class Map implements Visitor {
         return timeout;
     }
 
-//    public void setTimeout(int timeout) {
-//        this.timeout = timeout;
-//    }
-
     public abstract Image getBg();
 }

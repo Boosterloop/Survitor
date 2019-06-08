@@ -2,9 +2,9 @@ package Model.element;
 
 import Model.visitor.Visitor;
 
-public class Trou extends Obstacle {
-    public Trou (int width, int height){
-        super(width, height);
+public class Hole extends Obstacle {
+    public Hole(int size){
+        super(size, size/2);
     }
     public void accept(Visitor visitor){
         visitor.visit(this);
@@ -14,9 +14,13 @@ public class Trou extends Obstacle {
         return "trou.png";
     }
 
+    public int getRadius(double angle) {
+        return ovalRadius(angle);
+    }
+
     public void setSize(int size) {
         width = size;
-        height = size;
+        height = size/2;
         loadImage();
     }
 

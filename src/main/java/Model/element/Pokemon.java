@@ -1,12 +1,10 @@
 package Model.element;
 
 import Model.visitor.Visitor;
-import View.MainFrame;
 
 public class Pokemon extends Obstacle {
     private int speed;
-    private int vx ;
-    private int vy ;
+
 
     public Pokemon (int width, int height, int vitesse){
         super(width, height);
@@ -21,22 +19,18 @@ public class Pokemon extends Obstacle {
 
     public void moveRandom() {
         moveStraight();
-        if (rand.nextInt() % 50 == 0) {
+        if (rand.nextInt() % 20 == 0) {
             vx = speed * (rand.nextInt()%2);
             vy = speed * (rand.nextInt()%2);
         }
     }
-    public void moveStraight () {
-        if (x + vx >= MainFrame.WIDTH - width || x + vx <= 0)
-            vx = -vx;
-        if (y + vy >= MainFrame.HEIGHT - height || y + vy <= 0)
-            vy = -vy;
-        x += vx;
-        y += vy;
-    }
 
     public String getImagePath() {
         return "voltorb.png";
+    }
+
+    public int getRadius(double angle) {
+        return roundRadius();
     }
 
     public int getSpeed() {
