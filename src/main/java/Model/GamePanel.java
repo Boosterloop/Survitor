@@ -104,7 +104,6 @@ public class GamePanel extends JPanel implements ActionListener {
 //                    System.out.println("WIN");
                     drawMessage(g, winImg);
                 } else {
-                    // TODO reinit. better (factorize reset code)
                     changeLevel(currentTime, true);
                 }
             }
@@ -173,7 +172,6 @@ public class GamePanel extends JPanel implements ActionListener {
             int distX = playerCenterX - obstacleCenterX;
             int distY = playerCenterY - obstacleCenterY;
 
-            // TODO correct angle when ratio > 1 and when /0
             double angle = distY == 0 ? 1 : Math.atan( (double)distY / (double) distX);
             int obstacleRadius = obstacle.getRadius(angle);
 
