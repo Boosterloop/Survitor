@@ -22,9 +22,9 @@ public class GamePanel extends JPanel implements ActionListener {
     private Timer timer;
     private PlayerView playerView;
     private List<Obstacle> obstacleList;
-    private final int FRAMES_DELAY = 30;
-    private final int SHOW_POS_TIME = 1000;
-    private final int SHOW_SCREEN_TIME = 1;
+    private final int FRAMES_DELAY = 30;  // ms
+    private final int SHOW_POS_TIME = 1000; // ms
+    private final int SHOW_SCREEN_TIME = 1;  // sec
     private long startTime;
     private Map currentMap;
     private List<Map> maps;
@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.start();
 
         startTime = System.nanoTime();
-        maps = Arrays.asList(new Ship(5), new Jungle(5), new Dungeon(5, playerView));
+        maps = Arrays.asList(new Ship(15), new Jungle(15), new Dungeon(15, playerView));
         currentMap = maps.get(level);
     }
 
@@ -82,6 +82,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
         }
+        // if time for showing new positions is over: (showNewPos blocks movement)
         else if (showNewPos && (currentTime - startTime)/1000000 >= SHOW_POS_TIME)
             showNewPos = false;
         // level timeout reached:
@@ -90,16 +91,16 @@ public class GamePanel extends JPanel implements ActionListener {
             if (endLevelTime == 0) {
                 endLevelTime = currentTime;
             }
-            else if (level < maps.size()-1) {
-
+            // if some level left
+            if (level < maps.size()-1) {
+                // display changing level screen for SHOW_SCREEN_TIME sec
                 if ((currentTime - endLevelTime) / 1000000000 < SHOW_SCREEN_TIME) {
                     drawMessage(g, nextImg);
-                } else {
+                } else { // then change level
                     changeLevel(currentTime, false);
                 }
-
             }
-            else { // won the game
+            else { // won the game : display win screen and reset.
                 if ((currentTime - endLevelTime) / 1000000000 < SHOW_SCREEN_TIME) {
 //                    System.out.println("WIN");
                     drawMessage(g, winImg);
@@ -108,6 +109,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
         }
+        // in any other case, draws the situation. (currentMap + player + obstacles)
         else {
             doDrawing(g, (currentTime - startTime)/1000000.0 - SHOW_POS_TIME );
         }
@@ -116,6 +118,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void doDrawing(Graphics g, double elapsedTime) {
         Graphics2D g2d = (Graphics2D) g;
+        // drawing map, obstacles and player
         g2d.drawImage(currentMap.getBg(), 0, 0, this);
         for (Obstacle obstacle : obstacleList) {
             g2d.drawImage(obstacle.getImage(), obstacle.getX(), obstacle.getY(), this);
@@ -134,10 +137,11 @@ public class GamePanel extends JPanel implements ActionListener {
         g.fillRect(MainFrame.WIDTH - 105,5, 100, hauteurBarreVie);
         g.setColor(Color.BLUE);
         int time = elapsedTime < 0 ? 0 : (int)((elapsedTime/(currentMap.getTimeout() * 10)));
-
         g.fillRect(MainFrame.WIDTH - 105,5, time, hauteurBarreVie);
         g.setColor(Color.BLACK);
         g.drawRect(MainFrame.WIDTH - 105,5, PlayerView.PV_MAX, hauteurBarreVie);
+        // border of life bar
+        g.drawRect(5,5, PlayerView.PV_MAX, hauteurBarreVie);
     }
 
     private void drawMessage(Graphics g, Image image) {
@@ -148,6 +152,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
+        // the 3 moments where nothing should move: player is dead, level has ended and next has not started.
         if (deathTime==0 && endLevelTime==0 && !showNewPos) {
             playerView.move();
             for (Obstacle obstacle : obstacleList)
@@ -172,7 +177,7 @@ public class GamePanel extends JPanel implements ActionListener {
             int distX = playerCenterX - obstacleCenterX;
             int distY = playerCenterY - obstacleCenterY;
 
-            double angle = distY == 0 ? 1 : Math.atan( (double)distY / (double) distX);
+            double angle = distY == 0 ? 1 : Math.atan( (double)distY / distX);
             int obstacleRadius = obstacle.getRadius(angle);
 
             // multiplying elements by themselves is faster than calling pow(x,2).
@@ -219,8 +224,8 @@ public class GamePanel extends JPanel implements ActionListener {
                 new Wizard(40, 40, 3));
     }
 
+    // changes to superior level or resets to first.
     private void changeLevel (long currentTime, boolean reset) {
-
 
         endLevelTime = 0;
         startTime = currentTime;
@@ -238,7 +243,6 @@ public class GamePanel extends JPanel implements ActionListener {
             for (Obstacle obstacle : obstacleList)
                 obstacle.newRandomPos();
         }
-
     }
 
     public int getWidth() {

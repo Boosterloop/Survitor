@@ -36,6 +36,7 @@ public class PlayerView implements Visitor {
 
     }
 
+    // moves player if border not reached.
     public void move() {
 
         if (x + dx > 0 && x + dx < gp.getWidth() - w) {
@@ -46,6 +47,7 @@ public class PlayerView implements Visitor {
             y += dy;
         }
     }
+    // reset pos to center of screen
     public void resetPos() {
         x = (MainFrame.WIDTH - w) / 2;
         y = (MainFrame.HEIGHT - h) / 2;

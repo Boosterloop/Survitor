@@ -29,28 +29,33 @@ public class Dungeon extends Map {
 
     public void visit (Wizard wizard){
 
+        // makes the wizard jump from half of its distance to the player, on the opposite side if in the
+        // field, on the same side otherwise.
         if (jumpCount++ % 47 == 0) {
             int distX = (player.getX() - wizard.getX()) / 2;
             int distY = (player.getY() - wizard.getY()) / 2;
-            int newX = player.getX() + distX;
-            int newY = player.getY() + distY;
-            if (newX > 0 && newX < MainFrame.WIDTH - wizard.getWidth() && newY > 0 && newY < MainFrame.HEIGHT - wizard.getHeight())
-                wizard.move(newX, newY);
+            int oppositeX = player.getX() + distX;
+            int oppositeY = player.getY() + distY;
+            if (oppositeX > 0 && oppositeX < MainFrame.WIDTH - wizard.getWidth() && oppositeY > 0 && oppositeY < MainFrame.HEIGHT - wizard.getHeight())
+                wizard.move(oppositeX, oppositeY);
             else
                 wizard.move(wizard.getX() + distX, wizard.getY() + distY);
         }
     }
+
+    // grows the visited hole every 47 visit
     public void  visit (Hole hole){
 
         if(holeVisitCount ++ % 47 == 0)
             hole.setSize(hole.getSize()+10);
     }
 
+
     public void visit (Pokemon pokemon){
         //follows player
-        int vx, vy;
-        vx = player.getX() < pokemon.getX() ? -pokemon.getSpeed() : pokemon.getSpeed();
-        vy = player.getY() < pokemon.getY() ? -pokemon.getSpeed() : pokemon.getSpeed();
-        pokemon.move(pokemon.getX()+vx, pokemon.getY()+vy);
+        int dx, dy;
+        dx = player.getX() < pokemon.getX() ? -pokemon.getSpeed() : pokemon.getSpeed();
+        dy = player.getY() < pokemon.getY() ? -pokemon.getSpeed() : pokemon.getSpeed();
+        pokemon.move(pokemon.getX()+dx, pokemon.getY()+dy);
     }
 }

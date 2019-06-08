@@ -25,7 +25,7 @@ public class Jungle extends Map {
     }
 
     public void visit (Wizard wizard){
-        // doubling speed and randomizing directions every 41 / nbWizard frames
+        // doubling speed and randomizing directions of visited wizard every 41 visit
         if (++speedCount % 41 == 0) {
             wizard.setRandomSpeed();
             wizard.setVx(wizard.getVx() * 2);
@@ -38,6 +38,7 @@ public class Jungle extends Map {
         }
         wizard.moveStraight();
     }
+    // grows the visited hole every 43 visit
     public void visit (Hole hole){
         if(holeVisitCount ++ % 43 == 0)
             hole.setSize(hole.getSize()+5);

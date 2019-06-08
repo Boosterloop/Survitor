@@ -45,10 +45,11 @@ public abstract class Obstacle implements Visitable {
             newRandomPos();
     }
 
+    // moves obstacle of vx and vy, and change their sign if field border is met.
     public void moveStraight () {
         if (x + vx >= MainFrame.WIDTH - width || x + vx <= 0)
             vx = -vx;
-        if (y + vy >= MainFrame.HEIGHT - height || y + vy <= 0)
+        if (y + vy >= MainFrame.HEIGHT - height - 20 || y + vy <= 0)
             vy = -vy;
         x += vx;
         y += vy;
@@ -106,6 +107,8 @@ public abstract class Obstacle implements Visitable {
 
     public abstract String getImagePath ();
 
+    // child classes must override this method to return their radius depending on the angle.
+    // commodity methods for simple shapes are defined below and can be called by subclasses.
     public abstract int getRadius (double angle);
 
     protected int ovalRadius (double angle) {
@@ -121,10 +124,10 @@ public abstract class Obstacle implements Visitable {
     }
 
     protected int rectangleRadius (double angle) {
-        angle = Math.abs(angle);
-        if (angle < 0.5)
+        double absAngle = Math.abs(angle);
+        if (absAngle < 0.5)
             return width/2;
-        if (angle < 1)
+        if (absAngle < 1)
             return (int)(Math.sqrt((double)width*width+height*height)/2);
         return height/2;
     }
