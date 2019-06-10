@@ -1,21 +1,21 @@
 package Model.visitor;
 
-import Model.element.Laser;
+import Model.element.Hole;
+import Model.element.Wizard;
 import Model.element.Pokemon;
-import Model.element.Trou;
 
 public interface Visitor{
     /**
-     * Méthode pour réaliser la visite sur l'ếlément laser
-     * @param laser
+     * Méthode pour réaliser la visite sur l'ếlément wizard
+     * @param wizard
      * */
-    void visit(Laser laser);
+    void visit(Wizard wizard);
 
     /**
-     * Méthode pour réalisé la visite sur l'élément trou
-     * @param trou
+     * Méthode pour réalisé la visite sur l'élément hole
+     * @param hole
      * */
-    void visit(Trou trou);
+    void visit(Hole hole);
 
     /**
      * Méthode pour réalisé la visite sur l'élément pokemon

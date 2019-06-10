@@ -1,4 +1,10 @@
-public class Map {
+package View;
+
+import Model.visitor.Visitor;
+
+import java.awt.*;
+
+public abstract class Map implements Visitor {
     private int timeout;
 
     public Map(int timeout) {
@@ -9,7 +15,5 @@ public class Map {
         return timeout;
     }
 
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
-    }
+    public abstract Image getBg();
 }
