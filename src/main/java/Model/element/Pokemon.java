@@ -3,21 +3,18 @@ package Model.element;
 import Model.visitor.Visitor;
 
 /**
- * Implements a Wizard obstacle
+ * Implements a Pokemon obstacle
  */
 public class Pokemon extends Obstacle {
     private int speed;
 
-    // if we only use a round pokemon we should make a constructor with "size" like Hole
-    // (and call the class "Voltorb" or "roundPkmn")
     /**
      * Constructor
-     * @param width of Pokemon
-     * @param height of Pokemon
+     * @param size of Pokemon
      * @param speed of Pokemon
      */
-    public Pokemon (int width, int height, int speed){
-        super(width, height);
+    public Pokemon (int size, int speed){
+        super(size, size);
         this.speed = speed;
         vx = speed * (rand.nextInt()%2);
         vy = speed * (rand.nextInt()%2);
@@ -51,7 +48,7 @@ public class Pokemon extends Obstacle {
     }
 
     /**
-     * Calculate the radius for a round Pokemon
+     * Returns the radius for a round Shape
      * @param angle to calculate the radius
      * @return radius
      */

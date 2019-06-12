@@ -51,11 +51,21 @@ public class GamePanel extends JPanel implements ActionListener {
      */
     private void initBoard() {
 
-        addKeyListener(new TAdapter());
         setBackground(Color.white);
         setFocusable(true);
 
         playerView = new PlayerView(this);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                playerView.keyPressed(e);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                playerView.keyReleased(e);
+            }
+        });
         createObstacles();
         level = 0;
         final URL lost = Thread.currentThread().getContextClassLoader().getResource("lostScreen.jpg");
@@ -74,7 +84,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Paint the panel and its content, check the state of the game
+     * Paint the panel and its content, depending on the state of the game
      * @param g Graphics
      */
     @Override
@@ -156,6 +166,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setColor(Color.BLUE);
         int time = elapsedTime < 0 ? 0 : (int)((elapsedTime/(currentMap.getTimeout() * 10)));
         g.fillRect(MainFrame.WIDTH - 105,5, time, barHeight);
+        // outlines
         g.setColor(Color.BLACK);
         g.drawRect(MainFrame.WIDTH - 105,5, PlayerView.PV_MAX, barHeight);
         g.drawRect(5,5, PlayerView.PV_MAX, barHeight);
@@ -174,7 +185,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     /**
      *
-     * @param e
+     * @param e the event fired by the timer.
      */
     public void actionPerformed(ActionEvent e) {
 
@@ -226,19 +237,6 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
 
-    private class TAdapter extends KeyAdapter {
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            playerView.keyReleased(e);
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            playerView.keyPressed(e);
-        }
-    }
-
     /**
      * Create the obstacles
      */
@@ -247,10 +245,10 @@ public class GamePanel extends JPanel implements ActionListener {
                 new Hole(60),
                 new Hole(40),
                 new Hole(80),
-                new Pokemon(40,40, 2),
-                new Pokemon(40,40, 3),
-                new Pokemon(40,40, 4),
-                new Pokemon(40,40, 4),
+                new Pokemon(40, 2),
+                new Pokemon(40, 3),
+                new Pokemon(40, 4),
+                new Pokemon(40, 4),
                 new Wizard(40, 40, 4),
                 new Wizard(40, 40, 4),
                 new Wizard(40, 40, 3));
@@ -264,10 +262,10 @@ public class GamePanel extends JPanel implements ActionListener {
     private void changeLevel (long currentTime, boolean reset) {
 
         endLevelTime = 0;
+        showNewPos = true;
         startTime = currentTime;
         level = reset ? 0 : level + 1;
         currentMap = maps.get(level);
-        showNewPos = true;
 
         if (reset) {
             playerView.resurrect();

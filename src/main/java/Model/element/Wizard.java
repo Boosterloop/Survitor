@@ -38,7 +38,7 @@ public class Wizard extends Obstacle {
     }
 
     /**
-     * Get the radius
+     * Returns the radius for a rectangular Shape
      * @param angle to calculate the radius
      * @return radius
      */
@@ -55,7 +55,7 @@ public class Wizard extends Obstacle {
     }
 
     /**
-     * Set the direction of the wizard
+     * Set a random speed for the wizard, preventing any direction from being 0. (moves in diagonals)
      */
     public void setRandomSpeed() {
         vx = rand.nextInt() % 2 * speed;
