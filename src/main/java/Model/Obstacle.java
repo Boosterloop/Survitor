@@ -1,6 +1,5 @@
-package Model.element;
+package Model;
 
-import Model.visitor.Visitable;
 import View.MainFrame;
 
 import java.awt.*;

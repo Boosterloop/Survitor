@@ -1,4 +1,6 @@
-package Model.visitor;
+package Model;
+
+import View.Visitor;
 
 /**
  * Visitable interface to define the "accept" method

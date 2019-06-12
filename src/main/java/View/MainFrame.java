@@ -1,7 +1,5 @@
 package View;
 
-import Model.GamePanel;
-
 import javax.swing.*;
 import java.awt.*;
 

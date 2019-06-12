@@ -1,8 +1,8 @@
 package View;
 
-import Model.element.Hole;
-import Model.element.Wizard;
-import Model.element.Pokemon;
+import Model.Hole;
+import Model.Wizard;
+import Model.Pokemon;
 
 import java.awt.*;
 import java.net.URL;

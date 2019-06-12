@@ -1,7 +1,5 @@
 package View;
 
-import Model.visitor.Visitor;
-
 import java.awt.*;
 
 /**

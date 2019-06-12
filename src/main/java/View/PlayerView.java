@@ -1,10 +1,8 @@
 package View;
 
-import Model.GamePanel;
-import Model.element.Hole;
-import Model.element.Wizard;
-import Model.element.Pokemon;
-import Model.visitor.Visitor;
+import Model.Hole;
+import Model.Wizard;
+import Model.Pokemon;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

@@ -1,10 +1,9 @@
-package Model;
+package View;
 
-import Model.element.Hole;
-import Model.element.Wizard;
-import Model.element.Obstacle;
-import Model.element.Pokemon;
-import View.*;
+import Model.Hole;
+import Model.Wizard;
+import Model.Obstacle;
+import Model.Pokemon;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

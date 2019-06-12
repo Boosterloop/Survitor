@@ -1,6 +1,6 @@
-package Model.element;
+package Model;
 
-import Model.visitor.Visitor;
+import View.Visitor;
 
 /**
  * Implements a hole obstacle

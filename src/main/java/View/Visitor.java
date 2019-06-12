@@ -1,8 +1,8 @@
-package Model.visitor;
+package View;
 
-import Model.element.Hole;
-import Model.element.Wizard;
-import Model.element.Pokemon;
+import Model.Hole;
+import Model.Wizard;
+import Model.Pokemon;
 
 /**
  * Visitor interface to define the "visit" methods
