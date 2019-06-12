@@ -5,11 +5,17 @@ import Model.GamePanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main window of the game
+ */
 public class MainFrame extends JFrame {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
+    /**
+     * Constructor
+     */
     public MainFrame() {
         add(new GamePanel());
 

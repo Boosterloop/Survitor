@@ -7,6 +7,9 @@ import Model.element.Hole;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * Implements the dungeon map
+ */
 public class Dungeon extends Map {
 
     private Image background;
@@ -14,6 +17,11 @@ public class Dungeon extends Map {
     private int jumpCount = 0;
     private PlayerView player;
 
+    /**
+     * Constructor
+     * @param timeout time to survive on the map
+     * @param player to make Pokemon follow him
+     */
     public Dungeon(int timeout, PlayerView player) {
         super(timeout);
         final URL url = Thread.currentThread().getContextClassLoader().getResource("mapDungeon.jpg");
@@ -21,14 +29,21 @@ public class Dungeon extends Map {
         this.player = player;
     }
 
+    /**
+     * Getter for the background image of the map
+     * @return background image
+     */
     @Override
     public Image getBg() {
         return background;
     }
 
 
+    /**
+     * Visit a wizard obstacle
+     * @param wizard to visit
+     */
     public void visit (Wizard wizard){
-
         // makes the wizard jump from half of its distance to the player, on the opposite side if in the
         // field, on the same side otherwise.
         if (jumpCount++ % 47 == 0) {
@@ -43,14 +58,20 @@ public class Dungeon extends Map {
         }
     }
 
-    // grows the visited hole every 47 visit
+    /**
+     * Visit a hole obstacle
+     * @param hole to visit
+     */
     public void  visit (Hole hole){
-
+        // grows the visited hole every 47 visit
         if(holeVisitCount ++ % 47 == 0)
             hole.setSize(hole.getSize()+10);
     }
 
-
+    /**
+     * Visit a pokemon obstacle
+     * @param pokemon to visit
+     */
     public void visit (Pokemon pokemon){
         //follows player
         int dx, dy;
