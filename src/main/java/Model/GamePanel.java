@@ -79,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.start();
 
         startTime = System.nanoTime();
-        maps = Arrays.asList(new Ship(15), new Jungle(15), new Dungeon(15, playerView));
+        maps = Arrays.asList(new Ship(20), new Jungle(20), new Dungeon(20, playerView));
         currentMap = maps.get(level);
     }
 
