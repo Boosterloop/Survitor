@@ -15,10 +15,10 @@ import static java.lang.Math.abs;
 public abstract class Obstacle implements Visitable {
     protected int width;
     protected int height;
-    private int x;
-    private int y;
-    int vx = 0;
-    int vy = 0;
+    protected int x;
+    protected int y;
+    protected int vx = 0;
+    protected int vy = 0;
     private long lastCollision = 0;
     private int safeZoneSize = 100;
 
@@ -38,7 +38,7 @@ public abstract class Obstacle implements Visitable {
     }
 
     /**
-     * Move obstacle
+     * Move obstacle to new coordinates
      * @param x coordinate
      * @param y coordinate
      */
@@ -48,7 +48,7 @@ public abstract class Obstacle implements Visitable {
     }
 
     /**
-     * Generate a new position for obstacle if it overlaps the player
+     * Generate a new position for the obstacle. If it overlaps the player, the function is called again to find a new position.
      */
     public void newRandomPos () {
         x = abs(rand.nextInt() % (MainFrame.WIDTH - width - 60)) + 30;
@@ -155,15 +155,15 @@ public abstract class Obstacle implements Visitable {
     }
 
     /**
-     * Getter for the image's path
+     * Getter for the image's path. Child classes must override this method to define the path of their image.
      * @return image's path
      */
     public abstract String getImagePath();
 
-    // child classes must override this method to return their radius depending on the angle.
-    // commodity methods for simple shapes are defined below and can be called by subclasses.
     /**
-     * Return the radius
+     * Return the radius.
+     * child classes must override this method to return their radius depending on the angle.
+     * commodity methods for simple shapes are defined below and can be called by subclasses.
      * @param angle to calculate the radius
      * @return radius
      */
