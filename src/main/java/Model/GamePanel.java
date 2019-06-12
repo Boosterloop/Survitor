@@ -16,8 +16,11 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
 
+/**
+ * Implements the game
+ */
 public class GamePanel extends JPanel implements ActionListener {
-    private final int hauteurBarreVie = 10;
+    private final int barHeight = 10;
 
     private Timer timer;
     private PlayerView playerView;
@@ -36,10 +39,16 @@ public class GamePanel extends JPanel implements ActionListener {
     private long endLevelTime = 0;
     private boolean showNewPos = true;
 
+    /**
+     * Constructor
+     */
     public GamePanel() {
         initBoard();
     }
 
+    /**
+     * Initialises the game
+     */
     private void initBoard() {
 
         addKeyListener(new TAdapter());
@@ -64,6 +73,10 @@ public class GamePanel extends JPanel implements ActionListener {
         currentMap = maps.get(level);
     }
 
+    /**
+     * Paint the panel and its content, check the state of the game
+     * @param g Graphics
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -116,6 +129,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Draw the player, obstacles, health and time bars
+     * @param g Graphics
+     * @param elapsedTime elapsed time since the beginning of the level
+     */
     private void doDrawing(Graphics g, double elapsedTime) {
         Graphics2D g2d = (Graphics2D) g;
         // drawing map, obstacles and player
@@ -125,35 +143,43 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         g2d.drawImage(playerView.getImage(), playerView.getX(), playerView.getY(), this);
 
-        // Affichage de la barre de vie
+        // Draw health bar
         g.setColor(Color.black);
-        g.fillRect(5,5, PlayerView.PV_MAX, hauteurBarreVie);
+        g.fillRect(5,5, PlayerView.PV_MAX, barHeight);
         g.setColor(Color.red);
-        int tailleVie = (int)(playerView.getPv() / 100.0 * PlayerView.PV_MAX);
-        g.fillRect(5,5, tailleVie, hauteurBarreVie);
+        int healthWidth = (int)(playerView.getPv() / 100.0 * PlayerView.PV_MAX);
+        g.fillRect(5,5, healthWidth, barHeight);
 
         // display elapsed time
         g.setColor(Color.WHITE);
-        g.fillRect(MainFrame.WIDTH - 105,5, 100, hauteurBarreVie);
+        g.fillRect(MainFrame.WIDTH - 105,5, 100, barHeight);
         g.setColor(Color.BLUE);
         int time = elapsedTime < 0 ? 0 : (int)((elapsedTime/(currentMap.getTimeout() * 10)));
-        g.fillRect(MainFrame.WIDTH - 105,5, time, hauteurBarreVie);
+        g.fillRect(MainFrame.WIDTH - 105,5, time, barHeight);
         g.setColor(Color.BLACK);
-        g.drawRect(MainFrame.WIDTH - 105,5, PlayerView.PV_MAX, hauteurBarreVie);
-        // border of life bar
-        g.drawRect(5,5, PlayerView.PV_MAX, hauteurBarreVie);
+        g.drawRect(MainFrame.WIDTH - 105,5, PlayerView.PV_MAX, barHeight);
+        g.drawRect(5,5, PlayerView.PV_MAX, barHeight);
     }
 
+    /**
+     * Draw a message screen
+     * @param g Graphics
+     * @param image to draw
+     */
     private void drawMessage(Graphics g, Image image) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(image, 0, 0, null);
     }
 
 
+    /**
+     *
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
 
         // the 3 moments where nothing should move: player is dead, level has ended and next has not started.
-        if (deathTime==0 && endLevelTime==0 && !showNewPos) {
+        if (deathTime == 0 && endLevelTime == 0 && !showNewPos) {
             playerView.move();
             for (Obstacle obstacle : obstacleList)
                 obstacle.accept(currentMap);
@@ -163,6 +189,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Check the collisions
+     */
     private void checkCollide() {
 
         int playerRadius = playerView.getWidth() / 2;
@@ -210,6 +239,9 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Create the obstacles
+     */
     private void createObstacles () {
         obstacleList =  Arrays.asList(
                 new Hole(60),
@@ -224,7 +256,11 @@ public class GamePanel extends JPanel implements ActionListener {
                 new Wizard(40, 40, 3));
     }
 
-    // changes to superior level or resets to first.
+    /**
+     * Change to next level or reset to first level
+     * @param currentTime time at which start the next level
+     * @param reset if we want to reset to first level
+     */
     private void changeLevel (long currentTime, boolean reset) {
 
         endLevelTime = 0;
@@ -245,10 +281,18 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Getter for width
+     * @return width
+     */
     public int getWidth() {
         return super.getWidth();
     }
 
+    /**
+     * Getter for height
+     * @return height
+     */
     public int getHeight() {
         return super.getHeight();
     }

@@ -4,23 +4,25 @@ import Model.element.Hole;
 import Model.element.Wizard;
 import Model.element.Pokemon;
 
+/**
+ * Visitor interface to define the "visit" methods
+ */
 public interface Visitor{
     /**
-     * Méthode pour réaliser la visite sur l'ếlément wizard
-     * @param wizard
-     * */
+     * "Visit" method for a Wizard
+     * @param wizard to visit
+     */
     void visit(Wizard wizard);
 
     /**
-     * Méthode pour réalisé la visite sur l'élément hole
-     * @param hole
-     * */
+     * "Visit" method for a Hole
+     * @param hole to visit
+     */
     void visit(Hole hole);
 
     /**
-     * Méthode pour réalisé la visite sur l'élément pokemon
-     * @param pokemon
-     * */
+     * "Visit" method for a Pokemon
+     * @param pokemon to visit
+     */
     void visit(Pokemon pokemon);
-
 }

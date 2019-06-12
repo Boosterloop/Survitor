@@ -1,11 +1,12 @@
 package Model.visitor;
 
 /**
- * Created on 06.06.19.
- *
- * @author Max
+ * Visitable interface to define the "accept" method
  */
 public interface Visitable {
-
-    void accept (Visitor visitor);
+    /**
+     * Accept a visitor
+     * @param visitor to accept
+     */
+    void accept(Visitor visitor);
 }
